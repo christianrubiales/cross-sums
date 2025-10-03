@@ -101,24 +101,24 @@ public class Board {
         StringBuilder builder = new StringBuilder();
 
         builder.append("{\n");
-        builder.append("\"initialGrid\":\n");
+        builder.append("\t\"initialGrid\":\n");
         builder.append(toJsonString(initialGrid));
-        builder.append("\"solvedGrid\":\n");
+        builder.append("\t\"solvedGrid\":\n");
         builder.append(toJsonString(solvedGrid));
 
-        builder.append("\"rowSums\": [");
+        builder.append("\t\"rowSums\": [");
         for (int i = 0; i < size; i++) {
             builder.append(rowSums[i] + ", ");
         }
         builder.append("],\n");
 
-        builder.append("\"colSums\": [");
+        builder.append("\t\"colSums\": [");
         for (int i = 0; i < size; i++) {
             builder.append(colSums[i] + ", ");
         }
         builder.append("],\n");
 
-        builder.append("}\n");
+        builder.append("}");
 
         return builder.toString();
     }
@@ -126,16 +126,16 @@ public class Board {
     String toJsonString(char[][] grid) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("[\n");
+        builder.append("\t\t[\n");
         for (int i = 0; i < size; i++) {
-            builder.append("[");
+            builder.append("\t\t\t[");
             for (int j = 0; j < size; j++) {
-                builder.append(grid[i][j]);
+                builder.append("'" + grid[i][j] + "'");
                 if (j != size - 1)  builder.append(", ");
             }
             builder.append("],\n");
         }
-        builder.append("],\n");
+        builder.append("\t\t],\n");
 
         return builder.toString();
     }

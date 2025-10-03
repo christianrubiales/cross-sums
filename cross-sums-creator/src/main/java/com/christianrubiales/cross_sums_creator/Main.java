@@ -4,6 +4,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 import static java.lang.IO.println;
@@ -17,7 +20,7 @@ public class Main implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) {
+	public void run(String... args) throws IOException {
 		int numBoards = Integer.parseInt(args[0]);
 		println("Number of boards to create per size: " + numBoards);
 
@@ -27,13 +30,36 @@ public class Main implements CommandLineRunner {
 			boards.put(size, new ArrayList<>());
 			for (int i = 0; i < numBoards; i++) {
 				Board board = new Board(size);
-				println(board.toJsonString());
 				boards.get(size).add(board);
 			}
 		}
+
+		String boardString = toString(boards);
+		println(boardString);
+		long timestamp = new Date().getTime();
+		Path path = Path.of(timestamp + ".json");
+		Files.writeString(path, boardString);
 	}
 
 	String toString(Map<Integer, List<Board>> boards) {
-		return null;
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("{\n");
+
+		for (Integer size : boards.keySet()) {
+			builder.append("\"" + size +
+					"\":  [\n");
+
+			List<Board> boardList = boards.get(size);
+			for (Board board : boardList) {
+				builder.append(board.toJsonString() + ",\n");
+			}
+
+			builder.append("],\n");
+		}
+
+		builder.append("}\n");
+
+		return builder.toString();
 	}
 }
