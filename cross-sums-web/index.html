@@ -1,13 +1,114 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cross-sums-web</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross Sums</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: start;
+            justify-content: center;
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .grid {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .cell {
+            width: 80px;
+            height: 80px;
+            background-color: #3498db;
+            border: 1px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        /* special style for cells with two numbers */
+        .cell.two-numbers {
+            flex-direction: column;           /* stack numbers */
+            justify-content: space-between;   /* one at top, one at bottom */
+            padding: 6px 0;                   /* spacing from edges */
+        }
+
+        .cell.two-numbers div {
+            text-align: center;
+            width: 100%;                      /* keep centered */
+        }
+    </style>
+    <script src="app.js" charset="utf-8"></script>
+</head>
+<body>
+<div>
+    <div>
+        <button onclick="handleNewGame()">New Game</button>
+        <input type="radio" id="optionSize4" name="size" value="4" checked>
+        <label for="optionSize4">4x4</label>&nbsp;
+        <input type="radio" id="optionSize5" name="size" value="5">
+        <label for="optionSize5">5x5</label>&nbsp;
+        <input type="radio" id="optionSize6" name="size" value="6">
+        <label for="optionSize6">6x6</label>&nbsp;
+        <input type="radio" id="optionSize7" name="size" value="7">
+        <label for="optionSize7">7x7</label>&nbsp;
+        <input type="radio" id="optionSize8" name="size" value="8">
+        <label for="optionSize8">8x8</label>&nbsp;
+    </div>
+    <div>
+        &nbsp;
+    </div>
+    <div id="grid" class="grid">
+        <!-- Top row with two numbers -->
+        <div class="row" id="row0">
+            <div class="cell"></div>
+            <div class="cell two-numbers"><div id="rollingColSum1">2</div><div id="colSum1">102</div></div>
+            <div class="cell two-numbers"><div id="rollingColSum2">3</div><div id="colSum2">103</div></div>
+            <div class="cell two-numbers"><div id="rollingColSum3">4</div><div id="colSum3">104</div></div>
+            <div class="cell two-numbers"><div id="rollingColSum4">5</div><div id="colSum4">105</div></div>
+        </div>
+
+        <div class="row" id="row1">
+            <div class="cell two-numbers"><div id="rollingRowSum1">2</div><div id="rowSum1">102</div></div>
+            <div class="cell">7</div>
+            <div class="cell">8</div>
+            <div class="cell">9</div>
+            <div class="cell">10</div>
+        </div>
+        <div class="row" id="row2">
+            <div class="cell two-numbers"><div id="rollingRowSum2">2</div><div id="rowSum2">102</div></div>
+            <div class="cell">12</div>
+            <div class="cell">13</div>
+            <div class="cell">14</div>
+            <div class="cell">15</div>
+        </div>
+        <div class="row" id="row3">
+            <div class="cell two-numbers"><div id="rollingRowSum3">2</div><div id="rowSum3">102</div></div>
+            <div class="cell">17</div>
+            <div class="cell">18</div>
+            <div class="cell">19</div>
+            <div class="cell">20</div>
+        </div>
+        <div class="row" id="row4">
+            <div class="cell two-numbers"><div id="rollingRowSum4">2</div><div id="rowSum4">102</div></div>
+            <div class="cell">22</div>
+            <div class="cell">23</div>
+            <div class="cell">24</div>
+            <div class="cell">25</div>
+        </div>
+    </div>
+</div>
+</body>
 </html>
