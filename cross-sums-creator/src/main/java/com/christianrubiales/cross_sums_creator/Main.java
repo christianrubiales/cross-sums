@@ -26,7 +26,7 @@ public class Main implements CommandLineRunner {
 
 		Map<Integer, List<Board>> boards = new TreeMap<>();
 
-		for (int size = 4; size <= 5; size++) {
+		for (int size = 4; size <= 8; size++) {
 			boards.put(size, new ArrayList<>());
 			for (int i = 0; i < numBoards; i++) {
 				Board board = new Board(size);
@@ -37,14 +37,14 @@ public class Main implements CommandLineRunner {
 		String boardString = toString(boards);
 		println(boardString);
 		long timestamp = new Date().getTime();
-		Path path = Path.of(timestamp + ".json");
+		Path path = Path.of(timestamp + ".js");
 		Files.writeString(path, boardString);
 	}
 
 	String toString(Map<Integer, List<Board>> boards) {
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("{\n");
+		builder.append("const boards = {\n");
 
 		for (Integer size : boards.keySet()) {
 			builder.append("\"" + size +

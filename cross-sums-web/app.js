@@ -1,6 +1,31 @@
-
 function handleNewGame(size) {
     createGrid(size);
+
+    // get next grid for the given size
+    let solvedGames =  localStorage.getItem("solved" + size);
+    if (!solvedGames) {
+        solvedGames = "0";
+        localStorage.setItem("solved" + size, solvedGames);
+    }
+    solvedGames = Number(solvedGames);
+    let grid = boards[size][solvedGames];
+
+    // load column sums
+    for (let i = 0; i < size; i++) {
+        document.querySelector("#colSum" + (i+1)).textContent = grid.colSums[i];
+    }
+
+    // load row sums
+    for (let i = 0; i < size; i++) {
+        document.querySelector("#rowSum" + (i+1)).textContent = grid.colSums[i];
+    }
+
+    // load grid
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            document.querySelector("#row" + (i+1) + "col" + (j+1)).textContent = grid.initialGrid[i][j];
+        }
+    }
 }
 
 function createGrid(size) {
@@ -28,9 +53,9 @@ function createSumsRows(size) {
 
     for (let i = 1; i <= size; i++) {
         let rollingColSumDiv = document.createElement("div");
-        rollingColSumDiv.id = "rollingColSumDiv" + i;
+        rollingColSumDiv.id = "rollingColSum" + i;
         let colSumDiv = document.createElement("div");
-        colSumDiv.id = "colSumDiv" + i;
+        colSumDiv.id = "colSum" + i;
         let cell = document.createElement("div");
         cell.classList.add("cell");
         cell.classList.add("two-numbers");
@@ -53,9 +78,9 @@ function createOtherRows(size) {
 
         // create cell for row sum
         let rollingRowSumDiv = document.createElement("div");
-        rollingRowSumDiv.id = "rollingRowSumDiv" + (i-1);
+        rollingRowSumDiv.id = "rollingRowSum" + i;
         let rowSumDiv = document.createElement("div");
-        rowSumDiv.id = "rowSumDiv" + (i-1);
+        rowSumDiv.id = "rowSum" + i;
         let cell = document.createElement("div");
         cell.classList.add("cell");
         cell.classList.add("two-numbers");
@@ -64,10 +89,10 @@ function createOtherRows(size) {
         row.appendChild(cell);
 
         // create other cells
-        for (let j = 0; j < size; j++) {
+        for (let j = 1; j <= size; j++) {
             let cell = document.createElement("div");
             cell.classList.add("cell");
-            cell.id = "row" + (i-1) + "col" + j;
+            cell.id = "row" + i + "col" + j;
             row.appendChild(cell);
         }
 
