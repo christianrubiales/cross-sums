@@ -1,3 +1,5 @@
+let solvedGrid;
+
 function handleNewGame(size) {
     createGrid(size);
 
@@ -17,7 +19,7 @@ function handleNewGame(size) {
 
     // load row sums
     for (let i = 0; i < size; i++) {
-        document.querySelector("#rowSum" + (i+1)).textContent = grid.colSums[i];
+        document.querySelector("#rowSum" + (i+1)).textContent = grid.rowSums[i];
     }
 
     // load grid
@@ -25,6 +27,16 @@ function handleNewGame(size) {
         for (let j = 0; j < size; j++) {
             document.querySelector("#row" + (i+1) + "col" + (j+1)).textContent = grid.initialGrid[i][j];
         }
+    }
+
+    // initialize solvedGrid
+    solvedGrid = [];
+    for (let i = 0; i < size; i++) {
+        let row = [];
+        for (let j = 0; j < size; j++) {
+            row.push(grid.initialGrid[i][j]);
+        }
+        solvedGrid.push(row);
     }
 }
 
