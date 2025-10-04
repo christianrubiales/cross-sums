@@ -1,6 +1,5 @@
 
-function handleNewGame() {
-    const size = document.querySelector('input[name="size"]:checked').value;
+function handleNewGame(size) {
     createGrid(size);
 }
 
@@ -46,11 +45,13 @@ function createSumsRows(size) {
 function createOtherRows(size) {
     let grid = document.querySelector("#grid");
 
-    for (let i = 2; i <= size; i++) {
+    for (let i = 1; i <= size; i++) {
+        // create row
         let row = document.createElement("div");
         row.classList.add("row");
         row.id = "row" + i;
 
+        // create cell for row sum
         let rollingRowSumDiv = document.createElement("div");
         rollingRowSumDiv.id = "rollingRowSumDiv" + (i-1);
         let rowSumDiv = document.createElement("div");
@@ -62,9 +63,12 @@ function createOtherRows(size) {
         cell.appendChild(rowSumDiv);
         row.appendChild(cell);
 
+        // create other cells
         for (let j = 0; j < size; j++) {
             let cell = document.createElement("div");
             cell.classList.add("cell");
+            cell.id = "row" + (i-1) + "col" + j;
+            row.appendChild(cell);
         }
 
         grid.appendChild(row);
