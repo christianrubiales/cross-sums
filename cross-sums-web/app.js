@@ -1,4 +1,7 @@
 let solvedGrid;
+let selectedGrid;
+
+handleNewGame(4);
 
 function handleNewGame(size) {
     createGrid(size);
@@ -11,6 +14,7 @@ function handleNewGame(size) {
     }
     solvedGames = Number(solvedGames);
     let grid = boards[size][solvedGames];
+    selectedGrid = grid;
 
     // load column sums
     for (let i = 0; i < size; i++) {
@@ -38,6 +42,11 @@ function handleNewGame(size) {
         }
         solvedGrid.push(row);
     }
+
+    // add handlers
+    document.querySelectorAll('.cell:not(.two-numbers)').forEach(div => {
+        div.addEventListener('contextmenu', handleRightClick);
+    });
 }
 
 function createGrid(size) {
@@ -110,4 +119,25 @@ function createOtherRows(size) {
 
         grid.appendChild(row);
     }
+}
+
+function handleRightClick(event) {
+    event.preventDefault(); // Prevent the browser context menu
+    const divId = event.currentTarget.id; // Get the id of the div clicked
+
+    let i = divId.slice(3, divId.indexOf("col"));
+    let j = divId.slice(divId.indexOf("col") + 3);
+    console.log("row: " + i);
+    console.log("col: " + j);
+
+    if (selectedGrid.solvedGrid[i-1][j-1] === ' ') {
+        event.currentTarget.innerHTML = "";
+        checkIfWin();
+    } else {
+        console.log("Mistake");
+    }
+}
+
+function checkIfWin() {
+
 }
