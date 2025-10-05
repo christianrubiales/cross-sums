@@ -49,11 +49,19 @@
             text-align: center;
             width: 100%;                      /* keep centered */
         }
+
+        #youwin {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 <div>
-    <div style="display: flex; align-items: center; justify-content: center;">
+    <div style="display: flex; align-items: center; justify-content: center; font-weight: bold;">
         <span>New Game</span>&nbsp;
         <button onclick="handleNewGame(4)">4x4</button>&nbsp;
         <button onclick="handleNewGame(5)">5x5</button>&nbsp;
@@ -102,6 +110,9 @@
             <div class="cell">24</div>
             <div class="cell">25</div>
         </div>
+    </div>
+    <div id="youwin">
+        <span>You Win!</span>&nbsp;
     </div>
 </div>
 <script src="boards.js" charset="utf-8"></script>

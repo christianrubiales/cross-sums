@@ -1,9 +1,12 @@
 let solvedGrid;
 let selectedGrid;
+let gameSize;
 
 handleNewGame(4);
 
 function handleNewGame(size) {
+    gameSize = size;
+    document.getElementById("youwin").style.display = "none";
     createGrid(size);
 
     // get next grid for the given size
@@ -45,7 +48,7 @@ function handleNewGame(size) {
 
     // add handlers
     document.querySelectorAll('.cell:not(.two-numbers)').forEach(div => {
-        div.addEventListener('contextmenu', handleRightClick);
+        div.addEventListener('click', handleClick);
     });
 }
 
@@ -121,17 +124,15 @@ function createOtherRows(size) {
     }
 }
 
-function handleRightClick(event) {
-    event.preventDefault(); // Prevent the browser context menu
+function handleClick(event) {
     const divId = event.currentTarget.id; // Get the id of the div clicked
 
     let i = divId.slice(3, divId.indexOf("col"));
     let j = divId.slice(divId.indexOf("col") + 3);
-    console.log("row: " + i);
-    console.log("col: " + j);
 
     if (selectedGrid.solvedGrid[i-1][j-1] === ' ') {
         event.currentTarget.innerHTML = "";
+        solvedGrid[i-1][j-1] = ' ';
         checkIfWin();
     } else {
         console.log("Mistake");
@@ -139,5 +140,18 @@ function handleRightClick(event) {
 }
 
 function checkIfWin() {
+    // compare solvedGrid with selectedGrid
+    for (let i = 0; i < gameSize; i++) {
+        for (let j = 0; j < gameSize; j++) {
+            if (solvedGrid[i][j] !== selectedGrid.solvedGrid[i][j]) {
+                return false;
+            }
+        }
+    }
 
+    document.getElementById("youwin").style.display = "flex";
+    let solvedGames =  Number(localStorage.getItem("solved" + gameSize));
+    localStorage.setItem("solved" + gameSize, solvedGames + 1);
+
+    return true;
 }
