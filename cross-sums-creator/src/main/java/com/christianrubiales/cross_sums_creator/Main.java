@@ -33,8 +33,12 @@ public class Main implements CommandLineRunner {
 		for (int size = 4; size <= MAX_SIZE; size++) {
 			boards.put(size, new ArrayList<>());
 			for (int i = 0; i < numBoards; i++) {
-				Board board = new Board(size);
-				boards.get(size).add(board);
+                try {
+                    Board board = new Board(size);
+                    boards.get(size).add(board);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
 			}
 		}
 

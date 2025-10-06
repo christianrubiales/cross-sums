@@ -82,6 +82,31 @@ public class Board {
                 solvedGrid[j][i] = initialGrid[j][i];
             }
         }
+
+        // If a row or column has no deleted cells, throw exception
+        for (int i = 0; i < size; i++) {
+            boolean hasDeleted = false;
+            for (int j = 0; j < size; j++) {
+                if (solvedGrid[i][j] == ' ') {
+                    hasDeleted = true;
+                    break;
+                }
+            }
+            if (!hasDeleted) {
+                throw new IllegalStateException("Row has no deleted cell: \n" + toJsonString(solvedGrid));
+            }
+
+            boolean hasDeletedColumn = false;
+            for (int j = 0; j < size; j++) {
+                if (solvedGrid[j][i] == ' ') {
+                    hasDeletedColumn = true;
+                    break;
+                }
+            }
+            if (!hasDeletedColumn) {
+                throw new IllegalStateException("Column has no deleted cell: \n" + toJsonString(solvedGrid));
+            }
+        }
     }
 
     void calculateSums() {
