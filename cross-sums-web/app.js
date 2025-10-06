@@ -1,6 +1,8 @@
 let solvedGrid;
 let selectedGrid;
 let gameSize;
+let colTotals;
+let rowTotals;
 
 handleNewGame(4);
 
@@ -20,13 +22,19 @@ function handleNewGame(size) {
     selectedGrid = grid;
 
     // load column sums
+    colTotals = new Array(size);
     for (let i = 0; i < size; i++) {
+        document.querySelector("#rollingColSum" + (i+1)).textContent = grid.colTotals[i];
         document.querySelector("#colSum" + (i+1)).textContent = grid.colSums[i];
+        colTotals[i] = grid.colTotals[i];
     }
 
     // load row sums
+    rowTotals = new Array(size);
     for (let i = 0; i < size; i++) {
+        document.querySelector("#rollingRowSum" + (i+1)).textContent = grid.rowTotals[i];
         document.querySelector("#rowSum" + (i+1)).textContent = grid.rowSums[i];
+        rowTotals[i] = grid.rowTotals[i];
     }
 
     // load grid
@@ -132,7 +140,22 @@ function handleClick(event) {
 
     if (selectedGrid.solvedGrid[i-1][j-1] === ' ') {
         event.currentTarget.innerHTML = "";
+        colTotals[j-1] -= solvedGrid[i-1][j-1];
+        rowTotals[i-1] -= solvedGrid[i-1][j-1];
         solvedGrid[i-1][j-1] = ' ';
+        document.querySelector("#rollingColSum" + (j)).textContent = colTotals[j-1];
+        document.querySelector("#rollingRowSum" + (i)).textContent = rowTotals[i-1];
+
+        if (colTotals[j-1] == document.querySelector("#colSum" + (j)).textContent) {
+            document.querySelector("#rollingColSum" + (j)).textContent = "";
+            document.querySelector("#colSum" + (j)).textContent = "";
+        }
+
+        if (rowTotals[i-1] == document.querySelector("#rowSum" + (i)).textContent) {
+            document.querySelector("#rollingRowSum" + (i)).textContent = "";
+            document.querySelector("#rowSum" + (i)).textContent = "";
+        }
+
         checkIfWin();
     } else {
         console.log("Mistake");
@@ -149,9 +172,23 @@ function checkIfWin() {
         }
     }
 
+    document.querySelectorAll('.cell:not(.two-numbers)').forEach(div => {
+        div.removeEventListener('click', handleClick);
+    });
+
     document.getElementById("youwin").style.display = "flex";
     let solvedGames =  Number(localStorage.getItem("solved" + gameSize));
     localStorage.setItem("solved" + gameSize, solvedGames + 1);
+
+    for (let i = 0; i < size; i++) {
+        // blank out column sums and totals
+        document.querySelector("#rollingColSum" + (i+1)).textContent = '';
+        document.querySelector("#colSum" + (i+1)).textContent = '';
+
+        // blank out row sums and totals
+        document.querySelector("#rollingRowSum" + (i+1)).textContent = '';
+        document.querySelector("#rowSum" + (i+1)).textContent = '';
+    }
 
     return true;
 }
