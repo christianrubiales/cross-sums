@@ -11,11 +11,15 @@ public class Board {
 
     int[] rowSums;
     int[] colSums;
+    int[] rowTotals;
+    int[] colTotals;
 
     Board(int size) {
         this.size = size;
         rowSums = new int[size];
         colSums = new int[size];
+        rowTotals = new int[size];
+        colTotals = new int[size];
         initialGrid = new char[size][];
         solvedGrid = new char[size][];
         initialize();
@@ -86,6 +90,7 @@ public class Board {
                 if (solvedGrid[i][j] != ' ') {
                     rowSums[i] += solvedGrid[i][j] - '0';
                 }
+                rowTotals[i] += (initialGrid[i][j] - '0');
             }
         }
         for (int i = 0; i < size; i++) {
@@ -93,6 +98,7 @@ public class Board {
                 if (solvedGrid[j][i] != ' ') {
                     colSums[i] += solvedGrid[j][i] - '0';
                 }
+                colTotals[i] += (initialGrid[j][i] - '0');
             }
         }
     }
@@ -101,22 +107,34 @@ public class Board {
         StringBuilder builder = new StringBuilder();
 
         builder.append("{\n");
-        builder.append("\t\"initialGrid\":\n");
+        builder.append("  \"initialGrid\":\n");
         builder.append(toJsonString(initialGrid));
-        builder.append("\t\"solvedGrid\":\n");
+        builder.append("  \"solvedGrid\":\n");
         builder.append(toJsonString(solvedGrid));
 
-        builder.append("\t\"rowSums\": [");
+        builder.append("  \"rowSums\": [");
         for (int i = 0; i < size; i++) {
-            builder.append(rowSums[i] + ", ");
+            builder.append(rowSums[i] + (i < size-1 ? ", " : ""));
         }
         builder.append("],\n");
 
-        builder.append("\t\"colSums\": [");
+        builder.append("  \"colSums\": [");
         for (int i = 0; i < size; i++) {
-            builder.append(colSums[i] + ", ");
+            builder.append(colSums[i] + (i < size-1 ? ", " : ""));
         }
         builder.append("],\n");
+
+        builder.append("  \"rowTotals\": [");
+        for (int i = 0; i < size; i++) {
+            builder.append(rowTotals[i] + (i < size-1 ? ", " : ""));
+        }
+        builder.append("],\n");
+
+        builder.append("  \"colTotals\": [");
+        for (int i = 0; i < size; i++) {
+            builder.append(colTotals[i] + (i < size-1 ? ", " : ""));
+        }
+        builder.append("]\n");
 
         builder.append("}");
 
@@ -126,16 +144,18 @@ public class Board {
     String toJsonString(char[][] grid) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("\t\t[\n");
+        builder.append("    [\n");
         for (int i = 0; i < size; i++) {
-            builder.append("\t\t\t[");
+            builder.append("      [");
             for (int j = 0; j < size; j++) {
-                builder.append("'" + grid[i][j] + "'");
+                builder.append("\"" + grid[i][j] + "\"");
                 if (j != size - 1)  builder.append(", ");
             }
-            builder.append("],\n");
+            builder.append("]");
+            if (i < size-1) builder.append(",");
+            builder.append("\n");
         }
-        builder.append("\t\t],\n");
+        builder.append("    ],\n");
 
         return builder.toString();
     }
