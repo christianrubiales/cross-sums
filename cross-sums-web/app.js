@@ -149,11 +149,25 @@ function handleClick(event) {
         if (colTotals[j-1] == document.querySelector("#colSum" + (j)).textContent) {
             document.querySelector("#rollingColSum" + (j)).textContent = "";
             document.querySelector("#colSum" + (j)).textContent = "";
+
+            for (let a = 1; a <= gameSize; a++) {
+                let cell = document.querySelector("#row" + a + "col" + j);
+                if (cell.textContent != '') {
+                    cell.classList.add("solved");
+                }
+            }
         }
 
         if (rowTotals[i-1] == document.querySelector("#rowSum" + (i)).textContent) {
             document.querySelector("#rollingRowSum" + (i)).textContent = "";
             document.querySelector("#rowSum" + (i)).textContent = "";
+
+            for (let a = 1; a <= gameSize; a++) {
+                let cell = document.querySelector("#row" + i + "col" + a);
+                if (cell.textContent != '') {
+                    cell.classList.add("solved");
+                }
+            }
         }
 
         checkIfWin();
@@ -180,7 +194,7 @@ function checkIfWin() {
     let solvedGames =  Number(localStorage.getItem("solved" + gameSize));
     localStorage.setItem("solved" + gameSize, solvedGames + 1);
 
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < gameSize; i++) {
         // blank out column sums and totals
         document.querySelector("#rollingColSum" + (i+1)).textContent = '';
         document.querySelector("#colSum" + (i+1)).textContent = '';
