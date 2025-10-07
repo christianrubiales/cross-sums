@@ -4,66 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cross Sums</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            align-items: start;
-            justify-content: center;
-            background: #f4f4f4;
-            font-family: Arial, sans-serif;
-        }
-
-        .grid {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .row {
-            display: flex;
-        }
-
-        .cell {
-            width: 80px;
-            height: 80px;
-            background-color: #3498db;
-            border: 1px solid #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            box-sizing: border-box;
-        }
-
-        /* special style for cells with two numbers */
-        .cell.two-numbers {
-            flex-direction: column;           /* stack numbers */
-            justify-content: space-between;   /* one at top, one at bottom */
-            padding: 6px 0;                   /* spacing from edges */
-        }
-        .cell.solved {
-            background-color: #58d68d;
-        }
-
-        .cell.two-numbers div {
-            text-align: center;
-            width: 100%;                      /* keep centered */
-        }
-
-        #youwin {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 12px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div>
+    <div>
+        &nbsp;
+    </div>
     <div style="display: flex; align-items: center; justify-content: center; font-weight: bold;">
         <span>New Game</span>&nbsp;
         <button onclick="handleNewGame(4)">4x4</button>&nbsp;
@@ -71,6 +18,17 @@
         <button onclick="handleNewGame(6)">6x6</button>&nbsp;
         <button onclick="handleNewGame(7)">7x7</button>&nbsp;
         <button onclick="handleNewGame(8)">8x8</button>&nbsp;
+        <button id="openModal">Help</button>&nbsp;
+    </div>
+    <div id="overlay" class="modal-overlay">
+        <div class="modal">
+            <button class="close-btn" id="closeModal">&times;</button>
+            <h2>Cross Sums</h2>
+            <div>Click on cells that are not needed to create the sum for that column and row.</div>
+            <div>The topmost and leftmost cells contain two numbers:</div>
+            <div>the number on top is the current total of the cells for that column or row.</div>
+            <div>The bottom number is the sum that the correct cells must add up to.</div>
+        </div>
     </div>
     <div>
         &nbsp;

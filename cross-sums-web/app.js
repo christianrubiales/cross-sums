@@ -4,6 +4,7 @@ let gameSize;
 let colTotals;
 let rowTotals;
 
+initializeHelpModal();
 handleNewGame(4);
 
 function handleNewGame(size) {
@@ -205,4 +206,24 @@ function checkIfWin() {
     }
 
     return true;
+}
+
+function initializeHelpModal() {
+    const overlay = document.getElementById('overlay');
+    const openBtn = document.getElementById('openModal');
+    const closeBtn = document.getElementById('closeModal');
+
+    openBtn.addEventListener('click', () => {
+        overlay.style.display = 'flex';
+    });
+
+    closeBtn.addEventListener('click', () => {
+        overlay.style.display = 'none';
+    });
+
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            overlay.style.display = 'none';
+        }
+    });
 }
