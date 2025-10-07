@@ -18,6 +18,7 @@
         <button onclick="handleNewGame(6)">6x6</button>&nbsp;
         <button onclick="handleNewGame(7)">7x7</button>&nbsp;
         <button onclick="handleNewGame(8)">8x8</button>&nbsp;
+        <button onclick="solve()">Solve</button>&nbsp;
         <button id="openModal">Help</button>&nbsp;
     </div>
     <div id="overlay" class="modal-overlay">
@@ -75,8 +76,11 @@
     <div id="youwin">
         <span>You Win!</span>&nbsp;
     </div>
+    <div>&nbsp;</div>
+    <div id="solver" style="align-self: center;"></div>
 </div>
 <script src="boards.js" charset="utf-8"></script>
 <script src="app.js" charset="utf-8"></script>
+<script src="solver.js" charset="utf-8"></script>
 </body>
 </html>

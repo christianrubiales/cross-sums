@@ -197,12 +197,12 @@ function checkIfWin() {
 
     for (let i = 0; i < gameSize; i++) {
         // blank out column sums and totals
-        document.querySelector("#rollingColSum" + (i+1)).textContent = '';
-        document.querySelector("#colSum" + (i+1)).textContent = '';
+        document.querySelector("#rollingColSum" + (i+1)).textContent = "";
+        document.querySelector("#colSum" + (i+1)).textContent = "";
 
         // blank out row sums and totals
-        document.querySelector("#rollingRowSum" + (i+1)).textContent = '';
-        document.querySelector("#rowSum" + (i+1)).textContent = '';
+        document.querySelector("#rollingRowSum" + (i+1)).textContent = "";
+        document.querySelector("#rowSum" + (i+1)).textContent = "";
     }
 
     return true;
