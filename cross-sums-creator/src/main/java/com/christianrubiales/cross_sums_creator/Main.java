@@ -19,7 +19,7 @@ public class Main implements CommandLineRunner {
 
     private static int MAX_SIZE = 8;
 
-	public static void main(String[] args) {
+	static void main(String[] args) {
 		SpringApplication.run(Main.class, args);
 	}
 

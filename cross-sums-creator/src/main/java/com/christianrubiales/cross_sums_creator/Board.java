@@ -83,6 +83,10 @@ public class Board {
             }
         }
 
+        checkForNoDeletedCells();
+    }
+
+    void checkForNoDeletedCells() {
         // If a row or column has no deleted cells, throw exception
         for (int i = 0; i < size; i++) {
             boolean hasDeleted = false;
