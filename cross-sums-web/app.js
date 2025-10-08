@@ -178,6 +178,28 @@ function handleClick(event) {
 }
 
 function checkIfWin() {
+    if (isWin()) {
+        document.querySelectorAll('.cell:not(.two-numbers)').forEach(div => {
+            div.removeEventListener('click', handleClick);
+        });
+
+        document.getElementById("youwin").style.display = "flex";
+        let solvedGames = Number(localStorage.getItem("solved" + gameSize));
+        localStorage.setItem("solved" + gameSize, solvedGames + 1);
+
+        for (let i = 0; i < gameSize; i++) {
+            // blank out column sums and totals
+            document.querySelector("#rollingColSum" + (i + 1)).textContent = "";
+            document.querySelector("#colSum" + (i + 1)).textContent = "";
+
+            // blank out row sums and totals
+            document.querySelector("#rollingRowSum" + (i + 1)).textContent = "";
+            document.querySelector("#rowSum" + (i + 1)).textContent = "";
+        }
+    }
+}
+
+function isWin() {
     // compare solvedGrid with selectedGrid
     for (let i = 0; i < gameSize; i++) {
         for (let j = 0; j < gameSize; j++) {
@@ -185,24 +207,6 @@ function checkIfWin() {
                 return false;
             }
         }
-    }
-
-    document.querySelectorAll('.cell:not(.two-numbers)').forEach(div => {
-        div.removeEventListener('click', handleClick);
-    });
-
-    document.getElementById("youwin").style.display = "flex";
-    let solvedGames =  Number(localStorage.getItem("solved" + gameSize));
-    localStorage.setItem("solved" + gameSize, solvedGames + 1);
-
-    for (let i = 0; i < gameSize; i++) {
-        // blank out column sums and totals
-        document.querySelector("#rollingColSum" + (i+1)).textContent = "";
-        document.querySelector("#colSum" + (i+1)).textContent = "";
-
-        // blank out row sums and totals
-        document.querySelector("#rollingRowSum" + (i+1)).textContent = "";
-        document.querySelector("#rowSum" + (i+1)).textContent = "";
     }
 
     return true;
