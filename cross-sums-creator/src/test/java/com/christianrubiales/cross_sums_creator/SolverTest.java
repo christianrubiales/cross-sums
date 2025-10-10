@@ -146,13 +146,46 @@ class SolverTest {
 
     @Test
     void solve() {
+        char[][] initialGrid = {
+                {'1', '2', '7', '4'},
+                {'4', '3', '2', '9'},
+                {'1', '2', '8', '4'},
+                {'4', '3', '9', '1'}
+        };
+        char[][] solvedGrid = {
+                {'1', ' ', '7', ' '},
+                {' ', '3', '2', ' '},
+                {' ', '2', ' ', '4'},
+                {'4', '3', ' ', '1'}
+        };
+        int[] rowSums = {8, 5, 6, 8};
+        int[] colSums = {5, 8, 9, 5};
+
         Board board = getBoard(4);
         board.initialGrid = initialGrid;
+        board.solvedGrid = solvedGrid;
         board.rowSums = rowSums;
         board.colSums = colSums;
         char[][] grid = Solver.copy(board.initialGrid);
 
         List<Step> steps = Solver.solve(board);
+        System.out.println(board.toJsonString());
+        for (Step step : steps) {
+            System.out.println(step);
+        }
+    }
 
+
+    @Test
+    void solve2() {
+        for (int i = 0; i < 10; i++) {
+//            System.out.println(i);
+            Board board = getBoard(4);
+            try {
+                Solver.solve(board);
+            } catch (Exception e) {
+                System.err.println(board.toJsonString());
+            }
+        }
     }
 }

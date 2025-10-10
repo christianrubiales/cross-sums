@@ -85,20 +85,17 @@ public class Solver {
         String reason = "Remove cells greater than sum in columns";
 
         for (int j = 1; j <= board.size; j++) {
+            if (board.colSums[j-1] > 8 ) continue;
             for (int i = 1; i <= board.size; i++) {
                 if (grid[i-1][j-1] != ' ' && i(grid[i-1][j-1]) > board.colSums[j-1]) {
                     grid[i-1][j-1] = ' ';
                     steps.add(new Step(i, j, reason));
-                    solved[i-1][j-1] = true;
+                    markSolved(board, grid, solved, i-1, j-1);
                 }
             }
         }
 
         return steps;
-    }
-
-    static void markSolved() {
-        // TODO
     }
 
     static List<Step> removeInRowsCellsGreaterThanSum(Board board, char[][] grid, boolean[][] solved) {
@@ -106,16 +103,50 @@ public class Solver {
         String reason = "Remove cells greater than sum in rows";
 
         for (int i = 1; i <= board.size; i++) {
+            if (board.rowSums[i-1] > 8) continue;
             for (int j = 1; j <= board.size; j++) {
                 if (grid[i-1][j-1] != ' ' && i(grid[i-1][j-1]) > board.rowSums[i-1]) {
                     grid[i-1][j-1] = ' ';
                     steps.add(new Step(i, j, reason));
-                    solved[i-1][j-1] = true;
+                    markSolved(board, grid, solved, i-1, j-1);
                 }
             }
         }
 
         return steps;
+    }
+
+    static void markSolved(Board board, char[][] grid, boolean[][] solved, int row, int column) {
+        for (int j = 0; j < board.size; j++) {
+            int sum = 0;
+            for (int i = 0; i < board.size; i++) {
+                if (grid[i][j] != ' ') {
+                    sum += i(grid[i][j]);
+                }
+            }
+            if (sum == board.colSums[j]) {
+                for (int i = 0; i < board.size; i++) {
+                    if (grid[i][j] != ' ') {
+                        solved[i][j] = true;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < board.size; i++) {
+            int sum = 0;
+            for (int j = 0; j < board.size; j++) {
+                if (grid[i][j] != ' ') {
+                    sum += i(grid[i][j]);
+                }
+            }
+            if (sum == board.rowSums[i]) {
+                for (int j = 0; j < board.size; j++) {
+                    if (grid[i][j] != ' ') {
+                        solved[i][j] = true;
+                    }
+                }
+            }
+        }
     }
 
     static List<Step> removeNonContributingCellsInColumns(Board board, char[][] grid, boolean[][] solved) {
@@ -158,7 +189,8 @@ public class Solver {
             for (int i = 1; i <= board.size; i++) {
                 if (numberSet.contains(i(grid[i-1][j-1]))) {
                     steps.add(new Step(i, j, reason));
-                    solved[i-1][j-1] = true;
+                    grid[i-1][j-1] = ' ';
+                    markSolved(board, grid, solved, i-1, j-1);
                 }
             }
         }
@@ -206,7 +238,8 @@ public class Solver {
             for (int j = 1; j <= board.size; j++) {
                 if (numberSet.contains(i(grid[i-1][j-1]))) {
                     steps.add(new Step(i, j, reason));
-                    solved[i-1][j-1] = true;
+                    grid[i-1][j-1] = ' ';
+                    markSolved(board, grid, solved, i-1, j-1);
                 }
             }
         }
@@ -229,6 +262,7 @@ public class Solver {
                 for (int i = 1; i <= board.size; i++) {
                     if (!solved[i-1][j-1]) {
                         grid[i-1][j-1] = ' ';
+                        markSolved(board, grid, solved, i-1, j-1);
                         steps.add(new Step(i, j, reason));
                     }
                 }
